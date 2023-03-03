@@ -1,0 +1,23 @@
+services:
+  db:
+    build:
+      context: ./Docker
+      dockerfile: db.Dockerfile
+    environment:
+      POSTGRES_USER: dani
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - db:/data/postgres
+    ports:
+      - "5332:5432"
+    networks:
+      - db
+    restart: unless-stopped
+
+networks:
+  db:
+    driver: bridge
+
+volumes:
+  db:
