@@ -21,12 +21,10 @@ public class AuthorBook {
     @NotNull
     private java.util.Date updatedAt;
 
-    @Id
     @NotNull
     @Column(name = "author_id")
     private Integer authorId;
 
-    @Id
     @NotNull
     @Column(name = "book_id")
     private Integer bookId;
