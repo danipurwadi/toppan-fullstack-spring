@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "authors")
@@ -29,6 +30,9 @@ public class Author {
     @Column(name = "updatedAt")
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date updatedAt;
+
+    @OneToMany(mappedBy = "authorId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    Set<AuthorBook> authorBookSet;
 
     public Author(Integer id, String name, Date createdAt, Date updatedAt) {
         this.id = id;

@@ -10,26 +10,27 @@ import java.util.Objects;
 @IdClass(AuthorBookId.class)
 @Table(name = "author_books")
 public class AuthorBook {
-
-    @Id
-    @Temporal(TemporalType.TIMESTAMP)
     @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date createdAt;
 
-    @Id
-    @Temporal(TemporalType.TIMESTAMP)
     @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date updatedAt;
 
+    @Id
     @NotNull
-    @Column(name = "author_id")
-    private Integer authorId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="author_id")
+    private Author authorId;
 
+    @Id
     @NotNull
-    @Column(name = "book_id")
-    private Integer bookId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
+    private Book bookId;
 
-    public AuthorBook(Date createdAt, Date updatedAt, Integer authorId, Integer bookId) {
+    public AuthorBook(Date createdAt, Date updatedAt, Author authorId, Book bookId) {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.authorId = authorId;
@@ -55,19 +56,19 @@ public class AuthorBook {
         this.updatedAt = updatedAt;
     }
 
-    public Integer getAuthorId() {
+    public Author getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(Integer authorId) {
+    public void setAuthorId(Author authorId) {
         this.authorId = authorId;
     }
 
-    public Integer getBookId() {
+    public Book getBookId() {
         return bookId;
     }
 
-    public void setBookId(Integer bookId) {
+    public void setBookId(Book bookId) {
         this.bookId = bookId;
     }
 
