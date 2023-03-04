@@ -1,6 +1,7 @@
 package com.dani.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 import java.util.Objects;
@@ -10,13 +11,22 @@ import java.util.Objects;
 public class Author {
 
     @Id
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "author_generator")
+    @SequenceGenerator(name="author_generator", sequenceName = "author_id_seq")
     private Integer id;
+
+    @NotNull
+    @Column(columnDefinition = "varchar(255) COLLATE pg_catalog.\"default\"")
     private String name;
 
-    // TODO: Figure out how to change the date to use timezone
+    @NotNull
+    @Column(name = "createdAt")
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date createdAt;
 
+    @NotNull
+    @Column(name = "updatedAt")
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date updatedAt;
 

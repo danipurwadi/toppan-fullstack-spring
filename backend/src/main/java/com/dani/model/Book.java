@@ -9,23 +9,24 @@ import java.util.Objects;
 @Entity
 @Table(name = "books")
 public class Book {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "people_generator")
-    @SequenceGenerator(name="people_generator", sequenceName = "people_id_sequence")
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "books_generator")
+    @SequenceGenerator(name="books_generator", sequenceName = "books_id_seq")
     private Integer id;
 
-    @Column(columnDefinition = "varchar(255)")
     @NotNull
+    @Column(columnDefinition = "varchar(255) COLLATE pg_catalog.\"default\"")
     private String name;
 
-    // TODO: Figure out how to change the date to use timezone
-    @Temporal(TemporalType.TIMESTAMP)
     @NotNull
+    @Column(name = "createdAt")
+    @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date createdAt;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @NotNull
+    @Column(name = "updatedAt")
+    @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date updatedAt;
 
     public Book(Integer id, String name, Date createdAt, Date updatedAt) {
