@@ -15,7 +15,7 @@ public class Person {
     private Integer id;
 
     @NotNull
-    @Column(columnDefinition = "varchar(255) COLLATE pg_catalog.\"default\"")
+    @Column(columnDefinition = "varchar(255)")
     private String name;
 
     @NotNull
