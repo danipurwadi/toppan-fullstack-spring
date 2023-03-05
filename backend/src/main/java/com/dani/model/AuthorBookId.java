@@ -5,24 +5,26 @@ import java.util.Date;
 import java.util.Objects;
 
 public class AuthorBookId implements Serializable {
-    private Long authorId;
-    private Long bookId;
+    private Author author;
+    private Book book;
 
-    public AuthorBookId(Long authorId, Long bookId, Date createdAt, Date updatedAt) {
-        this.authorId = authorId;
-        this.bookId = bookId;
+    public AuthorBookId(Author author, Book book) {
+        this.author = author;
+        this.book = book;
     }
+
+    public AuthorBookId() { }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AuthorBookId that = (AuthorBookId) o;
-        return authorId.equals(that.authorId) && bookId.equals(that.bookId);
+        return author.equals(that.author) && book.equals(that.book);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(authorId, bookId);
+        return Objects.hash(author, book);
     }
 }

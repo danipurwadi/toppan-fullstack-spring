@@ -31,7 +31,7 @@ public class Author {
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date updatedAt;
 
-    @OneToMany(mappedBy = "authorId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
     Set<AuthorBook> authorBookSet;
 
     public Author(Integer id, String name, Date createdAt, Date updatedAt) {

@@ -30,7 +30,7 @@ public class Book {
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date updatedAt;
 
-    @OneToMany(mappedBy = "bookId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<AuthorBook> authorBookSet;
 
     public Book(Integer id, String name, Date createdAt, Date updatedAt) {

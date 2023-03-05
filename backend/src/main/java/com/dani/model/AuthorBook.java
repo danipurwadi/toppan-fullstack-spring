@@ -2,6 +2,8 @@ package com.dani.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 import java.util.Objects;
@@ -20,21 +22,22 @@ public class AuthorBook {
 
     @Id
     @NotNull
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="author_id")
-    private Author authorId;
+    private Author author;
 
     @Id
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
-    private Book bookId;
+    private Book book;
 
-    public AuthorBook(Date createdAt, Date updatedAt, Author authorId, Book bookId) {
+    public AuthorBook(Date createdAt, Date updatedAt, Author author, Book book) {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.authorId = authorId;
-        this.bookId = bookId;
+        this.author = author;
+        this.book = book;
     }
 
     public AuthorBook() {
@@ -56,20 +59,20 @@ public class AuthorBook {
         this.updatedAt = updatedAt;
     }
 
-    public Author getAuthorId() {
-        return authorId;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(Author authorId) {
-        this.authorId = authorId;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
-    public Book getBookId() {
-        return bookId;
+    public Book getBook() {
+        return book;
     }
 
-    public void setBookId(Book bookId) {
-        this.bookId = bookId;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     @Override
@@ -77,12 +80,12 @@ public class AuthorBook {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AuthorBook that = (AuthorBook) o;
-        return createdAt.equals(that.createdAt) && updatedAt.equals(that.updatedAt) && authorId.equals(that.authorId) && bookId.equals(that.bookId);
+        return createdAt.equals(that.createdAt) && updatedAt.equals(that.updatedAt) && author.equals(that.author) && book.equals(that.book);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(createdAt, updatedAt, authorId, bookId);
+        return Objects.hash(createdAt, updatedAt, author, book);
     }
 
     @Override
@@ -90,8 +93,8 @@ public class AuthorBook {
         return "AuthorBook{" +
                 "createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
-                ", authorId=" + authorId +
-                ", bookId=" + bookId +
+                ", author=" + author +
+                ", book=" + book +
                 '}';
     }
 }
