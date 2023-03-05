@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+sql_scripts/**
+sql_scripts/
+*.sql
+*.sh
