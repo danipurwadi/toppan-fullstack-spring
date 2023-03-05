@@ -75,6 +75,14 @@ public class Book {
         this.updatedAt = updatedAt;
     }
 
+    public Set<AuthorBook> getAuthorBookSet() {
+        return authorBookSet;
+    }
+
+    public void setAuthorBookSet(Set<AuthorBook> authorBookSet) {
+        this.authorBookSet = authorBookSet;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
