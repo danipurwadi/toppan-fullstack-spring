@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @IdClass(BookRentId.class)
@@ -69,5 +70,28 @@ public class BookRent {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BookRent bookRent = (BookRent) o;
+        return personId.equals(bookRent.personId) && bookId.equals(bookRent.bookId) && createdAt.equals(bookRent.createdAt) && updatedAt.equals(bookRent.updatedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(personId, bookId, createdAt, updatedAt);
+    }
+
+    @Override
+    public String toString() {
+        return "BookRent{" +
+                "personId=" + personId +
+                ", bookId=" + bookId +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }

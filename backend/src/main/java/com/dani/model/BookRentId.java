@@ -17,6 +17,8 @@ public class BookRentId implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public BookRentId() { }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -28,5 +30,15 @@ public class BookRentId implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(personId, bookId, createdAt, updatedAt);
+    }
+
+    @Override
+    public String toString() {
+        return "BookRentId{" +
+                "personId=" + personId +
+                ", bookId=" + bookId +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }
