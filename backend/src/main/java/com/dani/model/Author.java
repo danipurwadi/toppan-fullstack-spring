@@ -31,9 +31,6 @@ public class Author {
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date updatedAt;
 
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
-    Set<AuthorBook> authorBookSet;
-
     public Author(Integer id, String name, Date createdAt, Date updatedAt) {
         this.id = id;
         this.name = name;
@@ -74,14 +71,6 @@ public class Author {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Set<AuthorBook> getAuthorBookSet() {
-        return authorBookSet;
-    }
-
-    public void setAuthorBookSet(Set<AuthorBook> authorBookSet) {
-        this.authorBookSet = authorBookSet;
     }
 
     @Override
