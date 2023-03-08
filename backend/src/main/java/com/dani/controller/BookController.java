@@ -32,4 +32,25 @@ public class BookController {
         return bookRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException());
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteBook(@PathVariable Integer id) {
+        try {
+            bookRepository.deleteById(id);
+        } catch(Exception e) {
+            throw new BadRequestException();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public Book replaceBook(@RequestBody Book newBook, @PathVariable Integer id) {
+        return bookRepository.findById(id)
+            .map(book -> {
+                book.setName(newBook.getName());
+                book.setCreatedAt(newBook.getCreatedAt());
+                book.setUpdatedAt(newBook.getUpdatedAt());
+                return bookRepository.save(book);
+            })
+            .orElseThrow(() -> new BadRequestException());
+    }
 }
