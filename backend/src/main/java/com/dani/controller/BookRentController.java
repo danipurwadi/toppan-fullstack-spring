@@ -9,11 +9,12 @@ import com.dani.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @RestController
-@RequestMapping("/book-rents")
 @CrossOrigin("http://localhost:8080")
 public class BookRentController {
 
@@ -26,25 +27,80 @@ public class BookRentController {
     @Autowired
     private BookRentRepository bookRentRepository;
 
-    @PostMapping
+    @PostMapping("/book-rents")
     public BookRent newBookRent(@RequestBody BookRent newBookRent) {
         return bookRentRepository.save(newBookRent);
     }
 
-    @GetMapping
+    @GetMapping("/book-rents")
     public List<BookRent> getAllBookRents() {
         return bookRentRepository.findAll();
     }
 
-    @GetMapping
+    @GetMapping("/{bookId}/{personId}")
     public BookRent getBookRent(
-            @RequestParam("book-id") Long bookId,
-            @RequestParam("person-id") Long personId,
-            @RequestParam("created-at") Date createdAt,
-            @RequestParam("updated-at") Date updatedAt
+            @PathVariable Long bookId,
+            @PathVariable Long personId,
+            @RequestParam("created-at") String createdAtString,
+            @RequestParam("updated-at") String updatedAtString
     ) {
-        return bookRentRepository.findById(
-                new BookRentId(personId, bookId, createdAt, updatedAt)
-            ).orElseThrow(() -> new BadRequestException());
+        try {
+            Date createdAt = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(createdAtString);
+            Date updatedAt = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(updatedAtString);
+            return bookRentRepository.findById(new BookRentId(personId, bookId, createdAt, updatedAt)).get();
+        } catch(Exception e) {
+            throw new BadRequestException();
+        }
+    }
+
+    @GetMapping("/getTop3ReadBooks")
+    public List<Book> getTop3ReadBooks(@RequestParam("country_code") String countryCode) {
+        try {
+            char[] charArray = countryCode.toCharArray();
+            long countryCodeInt = (long) charArray[0] * (100 + (long) charArray[1]);
+            return bookRepository.findBookByCountry(countryCodeInt);
+        } catch(Exception e) {
+            throw new BadRequestException();
+        }
+    }
+
+    @DeleteMapping("/{bookId}/{personId}")
+    public void deleteBookRent(
+            @PathVariable Long bookId,
+            @PathVariable Long personId,
+            @RequestParam("created-at") String createdAtString,
+            @RequestParam("updated-at") String updatedAtString
+    ) {
+        try {
+            Date createdAt = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(createdAtString);
+            Date updatedAt = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(updatedAtString);
+            bookRentRepository.deleteById(new BookRentId(personId, bookId, createdAt, updatedAt));
+        } catch(Exception e) {
+            throw new BadRequestException();
+        }
+    }
+
+    @PutMapping("/{bookId}/{personId}")
+    public BookRent updateBookRent(
+            @RequestBody BookRent newBookRent,
+            @PathVariable Long bookId,
+            @PathVariable Long personId,
+            @RequestParam("created-at") String createdAtString,
+            @RequestParam("updated-at") String updatedAtString
+    ) {
+        try {
+            Date createdAt = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(createdAtString);
+            Date updatedAt = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(updatedAtString);
+            return bookRentRepository.findById(new BookRentId(personId, bookId, createdAt, updatedAt))
+                    .map(bookRent -> {
+                        bookRent.setBookId(newBookRent.getBookId());
+                        bookRent.setPersonId(newBookRent.getPersonId());
+                        bookRent.setCreatedAt(newBookRent.getCreatedAt());
+                        bookRent.setUpdatedAt(newBookRent.getUpdatedAt());
+                        return bookRentRepository.save(bookRent);
+                    }).get();
+        } catch(Exception e) {
+            throw new BadRequestException();
+        }
     }
 }

@@ -36,16 +36,42 @@ public class AuthorBookController {
         return authorBookRepository.findAll();
     }
 
-    @GetMapping
-    public AuthorBook getAuthorBook(
-            @RequestParam("book-id") Integer bookId,
-            @RequestParam("author-id") Integer authorId
-    ) {
+    @GetMapping("/{authorId}/{bookId}")
+    public AuthorBook getAuthorBook(@PathVariable Integer authorId, @PathVariable Integer bookId) {
         try {
             Author author = authorRepository.findById(authorId).get();
             Book book = bookRepository.findById(bookId).get();
-            return authorBookRepository.findById(new AuthorBookId(author, book)).orElseThrow(() -> new BadRequestException());
+            return authorBookRepository.findById(new AuthorBookId(author, book)).get();
         } catch (Exception e) {
+            throw new BadRequestException();
+        }
+    }
+
+    @DeleteMapping("/{authorId}/{bookId}")
+    public void deleteAuthorBook(@PathVariable Integer authorId, @PathVariable Integer bookId) {
+        try {
+            Author author = authorRepository.findById(authorId).get();
+            Book book = bookRepository.findById(bookId).get();
+            authorBookRepository.deleteById(new AuthorBookId(author, book));
+        } catch(Exception e) {
+            throw new BadRequestException();
+        }
+    }
+
+    @PutMapping("/{authorId}/{bookId}")
+    public AuthorBook updateAuthorBook(@RequestBody AuthorBook newAuthorBook, @PathVariable Integer authorId, @PathVariable Integer bookId) {
+        try {
+            Author author = authorRepository.findById(authorId).get();
+            Book book = bookRepository.findById(bookId).get();
+            return authorBookRepository.findById(new AuthorBookId(author, book))
+                    .map(authorBook -> {
+                        authorBook.setAuthor(newAuthorBook.getAuthor());
+                        authorBook.setBook(newAuthorBook.getBook());
+                        authorBook.setCreatedAt(newAuthorBook.getCreatedAt());
+                        authorBook.setUpdatedAt(newAuthorBook.getUpdatedAt());
+                        return authorBookRepository.save(authorBook);
+                    }).get();
+        } catch(Exception e) {
             throw new BadRequestException();
         }
     }
