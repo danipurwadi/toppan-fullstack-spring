@@ -1,6 +1,7 @@
 package com.dani.controller;
 
 import com.dani.exception.BadRequestException;
+import com.dani.model.Author;
 import com.dani.model.Person;
 import com.dani.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/people")
 @CrossOrigin("http://localhost:8080")
 public class PersonController {
 
@@ -32,4 +33,25 @@ public class PersonController {
                 .orElseThrow(() -> new BadRequestException());
     }
 
+    @DeleteMapping("/{id}")
+    public void deletePerson(@PathVariable Integer id) {
+        try {
+            personRepository.deleteById(id);
+        } catch(Exception e) {
+            throw new BadRequestException();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public Person editPerson(@RequestBody Person newPerson, @PathVariable Integer id) {
+        return personRepository.findById(id)
+                .map(person -> {
+                    person.setName(newPerson.getName());
+                    person.setCreatedAt(newPerson.getCreatedAt());
+                    person.setUpdatedAt(newPerson.getUpdatedAt());
+                    person.setCountryId(newPerson.getCountryId());
+                    return personRepository.save(person);
+                })
+                .orElseThrow(() -> new BadRequestException());
+    }
 }
