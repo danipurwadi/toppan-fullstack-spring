@@ -38,3 +38,10 @@
 .accordion-author p {
   font-size: 14px;
 }
+
+.accordion-children {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
