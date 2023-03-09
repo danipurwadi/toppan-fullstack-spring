@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './App.css';
 import ActionButton from './components/ActionButton';
 import MainPage from './pages/MainPage';
@@ -27,9 +27,11 @@ function App() {
           onChange={() => setCountryCode(randomiseCountry())}
         />
       </div>
-      <MainPage
-        isDataFound={isDataFound}
-        bookData={bookData} />
+      <div className="content">
+        <MainPage
+          isDataFound={isDataFound}
+          bookData={bookData} />
+      </div>
     </div>
   );
 }

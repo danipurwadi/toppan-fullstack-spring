@@ -3,4 +3,8 @@
   justify-content: center;
   align-items: center;
   height: 80vh;
+  border: 1px solid black;
+  max-width: fit-content;
+  height: fit-content;
+  padding: 20px;
 }

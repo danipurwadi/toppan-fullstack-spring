@@ -4,6 +4,14 @@
   height: 10vh;
 }
 
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 100%;
+  min-height: 80vh;
+}
+
 p {
   font-size: 18px;
   font-weight: 500;

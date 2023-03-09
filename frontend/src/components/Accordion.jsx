@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./Accordion.css";
 import { ReactComponent as Arrow } from "../assets/arrow.svg";
 import AccordionChildren from "./AccordionChildren";
