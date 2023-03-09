@@ -2,15 +2,17 @@ import React from "react";
 import ErrorComponent from "../components/ErrorComponent";
 import "./MainPage.css";
 
-export default function MainPage({ isDataFound }) {
+export default function MainPage({ isDataFound, bookData }) {
   return (
     <div className="main">
-      {isDataFound ? (
-        <ErrorComponent />
-      ) : (
+      {isDataFound && bookData != null ? (
         <div>
-          <h1>Test 123</h1>
+          {bookData.map((book, idx) => (
+            <h1 key={idx}>{book.name}</h1>
+          ))}
         </div>
+      ) : (
+        <ErrorComponent />
       )}
     </div>
   );
