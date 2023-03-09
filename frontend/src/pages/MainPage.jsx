@@ -1,4 +1,5 @@
 import React from "react";
+import Accordion from "../components/Accordion";
 import ErrorComponent from "../components/ErrorComponent";
 import "./MainPage.css";
 
@@ -6,9 +7,9 @@ export default function MainPage({ isDataFound, bookData }) {
   return (
     <div className="main">
       {isDataFound && bookData != null ? (
-        <div>
+        <div className="accordion-list">
           {bookData.map((book, idx) => (
-            <h1 key={idx}>{book.name}</h1>
+            <Accordion index={idx} book={book} />
           ))}
         </div>
       ) : (

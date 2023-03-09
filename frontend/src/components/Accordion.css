@@ -1,0 +1,40 @@
+.accordion {
+  background-color: #f7ecec;
+  padding: 0px 25px;
+  margin: 32px;
+  min-height: 108px;
+  z-index: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.accordion-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1;
+  position: relative;
+}
+
+.accordion-button {
+  background-color: transparent;
+  border: 0;
+}
+
+.accordion-button svg {
+  margin-left: 20px;
+}
+
+.accordion-author {
+  z-index: 2;
+  position: absolute;
+  right: 15px;
+  top: 66px;
+}
+
+.accordion-author p {
+  font-size: 14px;
+}
