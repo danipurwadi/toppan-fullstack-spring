@@ -1,6 +1,6 @@
-import "./NavBar.css";
+import "./ActionButton.css";
 
-export default function NavBar({ countryCode, onChange }) {
+export default function ActionButton({ countryCode, onChange }) {
   return (
     <button onClick={onChange} className="button">
       <p style={{ margin: 0 }}>Get country: {countryCode}</p>
