@@ -10,11 +10,12 @@ export default function Accordion({
 }) {
   return (
     <>
-      <div className="accordion">
+      <div className="accordion" id={`book-item-${index + 1}`}>
         <div className="accordion-content">
           <h1>{`${index + 1} ${book.name}`}</h1>
           <button
-            className="accordion-button"
+            className="book-toggle"
+            id="book-toggle"
             onClick={() => changeActiveIndex(index)}
           >
             <Arrow />

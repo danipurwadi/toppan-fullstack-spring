@@ -1,6 +1,6 @@
 .accordion {
   background-color: #f7ecec;
-  padding: 0px 30px;
+  padding: 0px 25px;
   margin: 25px;
   min-height: 108px;
   z-index: 1;
@@ -19,10 +19,12 @@
   position: relative;
 }
 
-.accordion-button {
+.book-toggle {
   background-color: transparent;
   border: 0;
   cursor: pointer;
+  margin-left: 30px;
+  padding: 0;
 }
 
 .accordion-button svg {

@@ -15,7 +15,7 @@ export default function MainPage({ isDataFound, bookData }) {
   };
 
   return (
-    <div className="main">
+    <div className="container" id="container">
       {isDataFound && bookData != null ? (
         <div className="accordion-list">
           {bookData.map((book, idx) => (
