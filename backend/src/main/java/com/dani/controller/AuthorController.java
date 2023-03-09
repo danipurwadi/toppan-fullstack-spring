@@ -2,6 +2,7 @@ package com.dani.controller;
 
 import com.dani.exception.BadRequestException;
 import com.dani.model.Author;
+import com.dani.model.Book;
 import com.dani.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,27 @@ public class AuthorController {
     @GetMapping("/{id}")
     public Author getAuthor(@PathVariable Integer id) {
         return authorRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException());
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAuthor(@PathVariable Integer id) {
+        try {
+            authorRepository.deleteById(id);
+        } catch(Exception e) {
+            throw new BadRequestException();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public Author editAuthor(@RequestBody Author newAuthor, @PathVariable Integer id) {
+        return authorRepository.findById(id)
+                .map(author -> {
+                    author.setName(newAuthor.getName());
+                    author.setCreatedAt(newAuthor.getCreatedAt());
+                    author.setUpdatedAt(newAuthor.getUpdatedAt());
+                    return authorRepository.save(author);
+                })
                 .orElseThrow(() -> new BadRequestException());
     }
 }
