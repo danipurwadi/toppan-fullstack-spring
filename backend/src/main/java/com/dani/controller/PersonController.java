@@ -43,7 +43,7 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
-    public Person editPerson(@RequestBody Person newPerson, @PathVariable Integer id) {
+    public Person updatePerson(@RequestBody Person newPerson, @PathVariable Integer id) {
         return personRepository.findById(id)
                 .map(person -> {
                     person.setName(newPerson.getName());

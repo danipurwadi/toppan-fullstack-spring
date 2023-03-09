@@ -43,14 +43,14 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public Book replaceBook(@RequestBody Book newBook, @PathVariable Integer id) {
+    public Book updateBook(@RequestBody Book newBook, @PathVariable Integer id) {
         return bookRepository.findById(id)
-            .map(book -> {
-                book.setName(newBook.getName());
-                book.setCreatedAt(newBook.getCreatedAt());
-                book.setUpdatedAt(newBook.getUpdatedAt());
-                return bookRepository.save(book);
-            })
-            .orElseThrow(() -> new BadRequestException());
+                .map(book -> {
+                    book.setName(newBook.getName());
+                    book.setCreatedAt(newBook.getCreatedAt());
+                    book.setUpdatedAt(newBook.getUpdatedAt());
+                    return bookRepository.save(book);
+                })
+                .orElseThrow(() -> new BadRequestException());
     }
 }

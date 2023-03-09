@@ -43,7 +43,7 @@ public class AuthorController {
     }
 
     @PutMapping("/{id}")
-    public Author editAuthor(@RequestBody Author newAuthor, @PathVariable Integer id) {
+    public Author updateAuthor(@RequestBody Author newAuthor, @PathVariable Integer id) {
         return authorRepository.findById(id)
                 .map(author -> {
                     author.setName(newAuthor.getName());
