@@ -5,17 +5,21 @@ import MainPage from './pages/MainPage';
 
 function App() {
   const [countryCode, setCountryCode] = useState("SG");
+  const [isDataFound, setIsDataFound] = useState(true);
 
   const randomiseCountry = () => {
     return "UK";
   };
   return (
-    <div className="App">
-      <ActionButton
-        countryCode={countryCode}
-        onChange={() => setCountryCode(randomiseCountry())}
-      />
-      <MainPage />
+    <div>
+      <div className="navbar">
+        <ActionButton
+          countryCode={countryCode}
+          onChange={() => setCountryCode(randomiseCountry())}
+        />
+      </div>
+      <MainPage
+        isDataFound={isDataFound} />
     </div>
   );
 }

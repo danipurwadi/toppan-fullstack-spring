@@ -1,6 +1,14 @@
 body {
+  height: 100%;
+  overflow-y: hidden;
   margin: 0;
   font-family: "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+#root,
+#root > div {
+  height: 100%;
 }

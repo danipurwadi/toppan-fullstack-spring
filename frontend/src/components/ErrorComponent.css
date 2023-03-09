@@ -1,0 +1,9 @@
+.error-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70.8px;
+  width: 500px;
+  background-color: white;
+  border: 1px solid black;
+}

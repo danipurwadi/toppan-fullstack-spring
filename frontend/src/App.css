@@ -1,5 +1,7 @@
-.App {
-  padding: 25px;
+.navbar {
+  padding-left: 25px;
+  padding-top: 25px;
+  height: 10vh;
 }
 
 p {
