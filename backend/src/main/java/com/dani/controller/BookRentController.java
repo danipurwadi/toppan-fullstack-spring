@@ -7,6 +7,7 @@ import com.dani.repository.AuthorRepository;
 import com.dani.repository.BookRentRepository;
 import com.dani.repository.BookRepository;
 import com.dani.repository.PersonRepository;
+import com.dani.service.Top3BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -31,6 +32,9 @@ public class BookRentController {
 
     @Autowired
     private BookRentRepository bookRentRepository;
+
+    @Autowired
+    private Top3BooksService top3BooksService;
 
     @PostMapping("/book-rents")
     public BookRent newBookRent(@RequestBody BookRent newBookRent) {
@@ -61,13 +65,8 @@ public class BookRentController {
     @GetMapping("/getTop3ReadBooks")
     public List<Top3Books> getTop3ReadBooks(@RequestParam("country_code") String countryCode) {
         try {
-            char[] charArray = countryCode.toCharArray();
-            long countryCodeInt = (long) charArray[0] * (100 + (long) charArray[1]);
-            System.out.println(countryCodeInt);
-            List<Top3Books> topBooks = bookRentRepository.getTop3Books(countryCodeInt, PageRequest.of(0, 3));
-            return topBooks;
+            return top3BooksService.getTop3Books(countryCode);
         } catch(Exception e) {
-            System.out.println(e);
             throw new BadRequestException();
         }
     }
