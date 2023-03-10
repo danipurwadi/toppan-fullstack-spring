@@ -8,12 +8,16 @@ import com.dani.repository.BookRentRepository;
 import com.dani.repository.BookRepository;
 import com.dani.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("http://localhost:8080")
@@ -55,14 +59,13 @@ public class BookRentController {
     }
 
     @GetMapping("/getTop3ReadBooks")
-    public List<BookRentDTO> getTop3ReadBooks(@RequestParam("country_code") String countryCode) {
+    public List<Top3Books> getTop3ReadBooks(@RequestParam("country_code") String countryCode) {
         try {
             char[] charArray = countryCode.toCharArray();
             long countryCodeInt = (long) charArray[0] * (100 + (long) charArray[1]);
             System.out.println(countryCodeInt);
-            List<Object[]> topBooks = bookRentRepository.getTop3Books(countryCodeInt);
-            System.out.println(topBooks);
-            return null;
+            List<Top3Books> topBooks = bookRentRepository.getTop3Books(countryCodeInt, PageRequest.of(0, 3));
+            return topBooks;
         } catch(Exception e) {
             System.out.println(e);
             throw new BadRequestException();
