@@ -1,5 +1,6 @@
 package com.dani.controller;
 
+import com.dani.dto.BookRentDTO;
 import com.dani.exception.BadRequestException;
 import com.dani.model.*;
 import com.dani.repository.AuthorRepository;
@@ -54,15 +55,35 @@ public class BookRentController {
     }
 
     @GetMapping("/getTop3ReadBooks")
-    public List<Book> getTop3ReadBooks(@RequestParam("country_code") String countryCode) {
+    public List<BookRentDTO> getTop3ReadBooks(@RequestParam("country_code") String countryCode) {
         try {
             char[] charArray = countryCode.toCharArray();
             long countryCodeInt = (long) charArray[0] * (100 + (long) charArray[1]);
-            return bookRepository.findBookByCountry(countryCodeInt);
+            System.out.println(countryCodeInt);
+            List<Object[]> topBooks = bookRentRepository.getTop3Books(countryCodeInt);
+            System.out.println(topBooks);
+            return null;
         } catch(Exception e) {
+            System.out.println(e);
             throw new BadRequestException();
         }
     }
+
+    @GetMapping("/getBookRentByCountry")
+    public BookRent getBookRentByCountry(@RequestParam("country_code") String countryCode) {
+        try {
+            char[] charArray = countryCode.toCharArray();
+            long countryCodeInt = (long) charArray[0] * (100 + (long) charArray[1]);
+            System.out.println(countryCodeInt);
+            BookRent bookRent = null;
+            System.out.println(bookRent);
+            return bookRent;
+        } catch(Exception e) {
+            System.out.println(e);
+            throw new BadRequestException();
+        }
+    }
+
 
     @DeleteMapping("/{bookId}/{personId}")
     public void deleteBookRent(
