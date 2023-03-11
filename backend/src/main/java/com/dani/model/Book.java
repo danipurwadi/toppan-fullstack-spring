@@ -13,7 +13,7 @@ public class Book {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "books_generator")
-    @SequenceGenerator(name="books_generator", sequenceName = "books_id_seq")
+    @SequenceGenerator(name="books_generator", sequenceName = "books_id_seq", allocationSize = 1)
     private Integer id;
 
     @NotNull

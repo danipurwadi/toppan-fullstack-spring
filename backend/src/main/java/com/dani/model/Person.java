@@ -10,7 +10,7 @@ import java.util.Date;
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "people_generator")
-    @SequenceGenerator(name="people_generator", sequenceName = "people_id_seq")
+    @SequenceGenerator(name="people_generator", sequenceName = "people_id_seq", allocationSize = 1)
     private Integer id;
 
     @NotNull
