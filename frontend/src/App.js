@@ -29,8 +29,8 @@ function App() {
     } else {
       setIsDataFound(true);
       setBookData(top3Books);
-      setCountryCode(randomCountry);
     }
+    setCountryCode(randomCountry);
   };
 
   return (
