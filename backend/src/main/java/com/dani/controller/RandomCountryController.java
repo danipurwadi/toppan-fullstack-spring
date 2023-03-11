@@ -9,7 +9,7 @@ import java.util.AbstractMap;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("http://localhost:8080")
+@CrossOrigin("http://localhost:3000")
 public class RandomCountryController {
     @GetMapping("/getRandomCountry")
     public Map<String, Map<String, String>> getRandomCountryAlphaCode() {

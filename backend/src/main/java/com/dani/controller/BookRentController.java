@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 @RestController
-@CrossOrigin("http://localhost:8080")
+@CrossOrigin("http://localhost:3000")
 public class BookRentController {
 
     @Autowired
