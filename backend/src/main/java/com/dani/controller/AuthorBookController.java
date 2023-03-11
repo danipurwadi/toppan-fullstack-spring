@@ -80,7 +80,7 @@ public class AuthorBookController {
         try {
             Author author = authorRepository.findById(authorBookDTO.getAuthorId()).get();
             Book book = bookRepository.findById(authorBookDTO.getBookId()).get();
-            return new AuthorBook(authorBookDTO.getCreatedAt(), authorBookDTO.getUpdatedAt(), author, book);
+            return new AuthorBook(author, book, authorBookDTO.getCreatedAt(), authorBookDTO.getUpdatedAt());
         } catch (Exception e) {
             throw new BadRequestException();
         }

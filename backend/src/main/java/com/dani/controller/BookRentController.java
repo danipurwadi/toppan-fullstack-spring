@@ -19,12 +19,6 @@ import java.util.Locale;
 public class BookRentController {
 
     @Autowired
-    private PersonRepository personRepository;
-
-    @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
     private BookRentRepository bookRentRepository;
 
     @Autowired
@@ -64,22 +58,6 @@ public class BookRentController {
             throw new BadRequestException();
         }
     }
-
-    @GetMapping("/getBookRentByCountry")
-    public BookRent getBookRentByCountry(@RequestParam("country_code") String countryCode) {
-        try {
-            char[] charArray = countryCode.toCharArray();
-            long countryCodeInt = (long) charArray[0] * (100 + (long) charArray[1]);
-            System.out.println(countryCodeInt);
-            BookRent bookRent = null;
-            System.out.println(bookRent);
-            return bookRent;
-        } catch(Exception e) {
-            System.out.println(e);
-            throw new BadRequestException();
-        }
-    }
-
 
     @DeleteMapping("/{bookId}/{personId}")
     public void deleteBookRent(
