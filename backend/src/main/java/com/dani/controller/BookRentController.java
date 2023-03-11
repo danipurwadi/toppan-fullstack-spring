@@ -3,8 +3,6 @@ package com.dani.controller;
 import com.dani.exception.BadRequestException;
 import com.dani.model.*;
 import com.dani.repository.BookRentRepository;
-import com.dani.repository.BookRepository;
-import com.dani.repository.PersonRepository;
 import com.dani.service.Top3BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,21 +13,19 @@ import java.util.List;
 import java.util.Locale;
 
 @RestController
+@RequestMapping("/book-rents")
 @CrossOrigin("http://localhost:3000")
 public class BookRentController {
 
     @Autowired
     private BookRentRepository bookRentRepository;
 
-    @Autowired
-    private Top3BooksService top3BooksService;
-
-    @PostMapping("/book-rents")
+    @PostMapping
     public BookRent newBookRent(@RequestBody BookRent newBookRent) {
         return bookRentRepository.save(newBookRent);
     }
 
-    @GetMapping("/book-rents")
+    @GetMapping
     public List<BookRent> getAllBookRents() {
         return bookRentRepository.findAll();
     }
@@ -45,15 +41,6 @@ public class BookRentController {
             Date createdAt = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(createdAtString);
             Date updatedAt = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH).parse(updatedAtString);
             return bookRentRepository.findById(new BookRentId(personId, bookId, createdAt, updatedAt)).get();
-        } catch(Exception e) {
-            throw new BadRequestException();
-        }
-    }
-
-    @GetMapping("/getTop3ReadBooks")
-    public List<TopReadBook> getTop3ReadBooks(@RequestParam("country_code") String countryCode) {
-        try {
-            return top3BooksService.getTop3Books(countryCode);
         } catch(Exception e) {
             throw new BadRequestException();
         }
