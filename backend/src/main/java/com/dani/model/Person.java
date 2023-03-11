@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
-import java.util.Objects;
 
 @Entity
 @Table(name = "people")
@@ -19,12 +18,12 @@ public class Person {
     private String name;
 
     @NotNull
-    @Column(name = "createdAt")
+    @Column(name = "`createdAt`")
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date createdAt;
 
     @NotNull
-    @Column(name = "updatedAt")
+    @Column(name = "`updatedAt`")
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date updatedAt;
 

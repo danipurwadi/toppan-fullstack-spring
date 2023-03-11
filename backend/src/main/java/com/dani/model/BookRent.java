@@ -22,12 +22,14 @@ public class BookRent {
     private Long bookId;
 
     @Id
-    @Temporal(TemporalType.TIMESTAMP)
     @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "`createdAt`")
     private java.util.Date createdAt;
 
     @Id
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "`updatedAt`")
     @NotNull
     private java.util.Date updatedAt;
 

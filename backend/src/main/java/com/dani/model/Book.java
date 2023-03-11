@@ -21,12 +21,12 @@ public class Book {
     private String name;
 
     @NotNull
-    @Column(name = "createdAt")
+    @Column(name = "`createdAt`")
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date createdAt;
 
     @NotNull
-    @Column(name = "updatedAt")
+    @Column(name = "`updatedAt`")
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date updatedAt;
 

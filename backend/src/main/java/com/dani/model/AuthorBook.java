@@ -2,8 +2,6 @@ package com.dani.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 import java.util.Objects;
@@ -12,14 +10,6 @@ import java.util.Objects;
 @IdClass(AuthorBookId.class)
 @Table(name = "author_books")
 public class AuthorBook {
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date createdAt;
-
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date updatedAt;
-
     @Id
     @NotNull
     @ManyToOne(cascade = CascadeType.REMOVE)
@@ -32,7 +22,17 @@ public class AuthorBook {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    public AuthorBook(Date createdAt, Date updatedAt, Author author, Book book) {
+    @NotNull
+    @Column(name = "`createdAt`")
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date createdAt;
+
+    @NotNull
+    @Column(name = "`updatedAt`")
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date updatedAt;
+
+    public AuthorBook(Author author, Book book, Date createdAt, Date updatedAt) {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.author = author;
