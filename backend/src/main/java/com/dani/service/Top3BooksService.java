@@ -1,6 +1,7 @@
 package com.dani.service;
 
 import com.dani.CountryCodeTranslator;
+import com.dani.exception.NoResultException;
 import com.dani.model.Person;
 import com.dani.model.TopReadBook;
 import com.dani.repository.*;
@@ -43,15 +44,23 @@ public class Top3BooksService {
         List<TopReadBook> top3Books = new ArrayList<>();
         long countryCode = countryCodeTranslator.getCountryCode(alphaCode);
         List<Long> topBooks = bookRentRepository.getTop3BooksId(page);
+        boolean hasResult = false;
         for (Long bookId : topBooks) {
             Integer bookIdInt = bookId.intValue();
             String bookName = bookRepository.findById(bookIdInt).get().getName();
             Integer authorId = authorBookRepository.getAuthorFromBookId(bookIdInt);
             String authorName = authorRepository.findById(authorId).get().getName();
             List<String> topBorrowers = bookRentRepository.getTop3BookBorrowersInCountry(countryCode,bookId, page);
-
+            if (topBorrowers.size() > 0) {
+                hasResult = true;
+            }
             top3Books.add(new TopReadBook(bookName, authorName, topBorrowers));
         }
-        return top3Books;
+
+        if (hasResult) {
+            return top3Books;
+        } else {
+            throw new NoResultException();
+        }
     }
 }

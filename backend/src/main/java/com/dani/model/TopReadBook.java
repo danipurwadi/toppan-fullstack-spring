@@ -6,12 +6,12 @@ import java.util.Objects;
 public class TopReadBook {
     private String name;
     private String author;
-    private List<String> borrowers;
+    private List<String> borrower;
 
-    public TopReadBook(String name, String author, List<String> borrowers) {
+    public TopReadBook(String name, String author, List<String> borrower) {
         this.name = name;
         this.author = author;
-        this.borrowers = borrowers;
+        this.borrower = borrower;
     }
 
     public String getName() {
@@ -30,12 +30,12 @@ public class TopReadBook {
         this.author = author;
     }
 
-    public List<String> getBorrowers() {
-        return borrowers;
+    public List<String> getBorrower() {
+        return borrower;
     }
 
-    public void setBorrowers(List<String> borrowers) {
-        this.borrowers = borrowers;
+    public void setBorrower(List<String> borrower) {
+        this.borrower = borrower;
     }
 
     @Override
@@ -43,12 +43,12 @@ public class TopReadBook {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TopReadBook topReadBook = (TopReadBook) o;
-        return Objects.equals(name, topReadBook.name) && Objects.equals(author, topReadBook.author) && Objects.equals(borrowers, topReadBook.borrowers);
+        return Objects.equals(name, topReadBook.name) && Objects.equals(author, topReadBook.author) && Objects.equals(borrower, topReadBook.borrower);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, author, borrowers);
+        return Objects.hash(name, author, borrower);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class TopReadBook {
         return "Top3Books{" +
                 "name='" + name + '\'' +
                 ", author='" + author + '\'' +
-                ", borrowers=" + borrowers +
+                ", borrower=" + borrower +
                 '}';
     }
 }
