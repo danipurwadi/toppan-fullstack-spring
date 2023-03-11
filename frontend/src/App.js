@@ -20,6 +20,7 @@ function App() {
 
   const getTop3Data = async () => {
     let randomCountry = await getRandomCountry();
+    randomCountry = "SG";
 
     const response = await fetch(`http://localhost:8080/getTop3ReadBooks?country_code=${randomCountry}`);
     const top3Books = await response.json();
