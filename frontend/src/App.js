@@ -4,30 +4,32 @@ import ActionButton from './components/ActionButton';
 import MainPage from './pages/MainPage';
 
 function App() {
-  const [countryCode, setCountryCode] = useState("SG");
+  const [countryCode, setCountryCode] = useState("");
   const [isDataFound, setIsDataFound] = useState(true);
   const [bookData, setBookData] = useState(null);
 
   const randomiseCountry = () => {
-    getRandomCountry();
     getTop3Data();
   };
 
   const getRandomCountry = async () => {
-    const getCountry = await fetch('https://c7cfbf3c-19b9-45b1-b49e-20f3f301ff80.mock.pstmn.io/getRandomCountry');
-    const country = await getCountry.json();
-    setCountryCode(country.country.country_code);
+    const getCountry = await fetch('http://localhost:8080/getRandomCountry');
+    const result = await getCountry.json();
+    return result.country.country_code;
   };
 
   const getTop3Data = async () => {
-    const response = await fetch(`https://c7cfbf3c-19b9-45b1-b49e-20f3f301ff80.mock.pstmn.io/getTop3ReadBooks?${countryCode}`);
+    let randomCountry = await getRandomCountry();
+
+    const response = await fetch(`http://localhost:8080/getTop3ReadBooks?country_code=${randomCountry}`);
     const top3Books = await response.json();
 
-    if (top3Books.message === "no results") {
+    if (top3Books.message === "no results" || top3Books.message === "invalid parameter") {
       setIsDataFound(false);
     } else {
       setIsDataFound(true);
       setBookData(top3Books);
+      setCountryCode(randomCountry);
     }
   };
 

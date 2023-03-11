@@ -25,7 +25,7 @@ export default function Accordion({
           <p>{`by ${book.author}`}</p>
         </div>
       </div>
-      {isActive ? (
+      {isActive && book.borrower.length > 0 ? (
         <div className="accordion-children">
           {book.borrower.map((name, idx) => (
             <AccordionChildren key={idx} name={name} />
