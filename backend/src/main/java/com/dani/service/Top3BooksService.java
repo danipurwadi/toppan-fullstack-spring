@@ -46,11 +46,8 @@ public class Top3BooksService {
         for (Long bookId : topBooks) {
             Integer bookIdInt = bookId.intValue();
             String bookName = bookRepository.findById(bookIdInt).get().getName();
-            System.out.println(bookName);
             Integer authorId = authorBookRepository.getAuthorFromBookId(bookIdInt);
-            System.out.println(authorId);
-//            String authorName = authorRepository.findById(authorId).get().getName();
-            String authorName = "Temp Name";
+            String authorName = authorRepository.findById(authorId).get().getName();
             List<String> topBorrowers = bookRentRepository.getTop3BookBorrowersInCountry(countryCode,bookId, page);
 
             top3Books.add(new TopReadBook(bookName, authorName, topBorrowers));
