@@ -12,13 +12,13 @@ import java.util.Objects;
 public class AuthorBook {
     @Id
     @NotNull
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name="author_id")
     private Author author;
 
     @Id
     @NotNull
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
 
