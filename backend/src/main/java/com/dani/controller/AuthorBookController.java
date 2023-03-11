@@ -1,5 +1,6 @@
 package com.dani.controller;
 
+import com.dani.dto.AuthorBookDTO;
 import com.dani.exception.BadRequestException;
 import com.dani.model.*;
 import com.dani.repository.AuthorBookRepository;
@@ -9,7 +10,6 @@ import com.dani.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -27,8 +27,8 @@ public class AuthorBookController {
     private BookRepository bookRepository;
 
     @PostMapping
-    public AuthorBook newAuthorBook(@RequestBody AuthorBook newAuthorBook) {
-        return authorBookRepository.save(newAuthorBook);
+    public AuthorBook newAuthorBook(@RequestBody AuthorBookDTO newAuthorBook) {
+        return authorBookRepository.save(convertToEntity(newAuthorBook));
     }
 
     @GetMapping
@@ -74,5 +74,16 @@ public class AuthorBookController {
         } catch(Exception e) {
             throw new BadRequestException();
         }
+    }
+
+    private AuthorBook convertToEntity(AuthorBookDTO authorBookDTO) {
+        try {
+            Author author = authorRepository.findById(authorBookDTO.getAuthorId()).get();
+            Book book = bookRepository.findById(authorBookDTO.getBookId()).get();
+            return new AuthorBook(authorBookDTO.getCreatedAt(), authorBookDTO.getUpdatedAt(), author, book);
+        } catch (Exception e) {
+            throw new BadRequestException();
+        }
+
     }
 }
