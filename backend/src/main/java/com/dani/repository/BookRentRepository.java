@@ -15,9 +15,9 @@ public interface BookRentRepository extends JpaRepository<BookRent, BookRentId> 
     @Query("select br.bookId FROM BookRent as br GROUP BY br.bookId ORDER BY COUNT(br.bookId) DESC")
     List<Long> getTop3BooksId(Pageable pageable);
 
-    @Query("select br.personId FROM BookRent as br " +
+    @Query("select p.name FROM BookRent as br " +
             "LEFT OUTER JOIN Person as p ON br.personId = p.id " +
             "WHERE p.countryId = :countryId AND br.bookId = :bookId " +
-            "GROUP BY br.personId ORDER BY COUNT(br.personId) DESC")
-    List<Long> getTop3BookBorrowersInCountry(@Param("countryId") Long countryId, @Param("bookId") Long bookId, Pageable pageable);
+            "GROUP BY br.personId, p.name ORDER BY COUNT(br.personId) DESC")
+    List<String> getTop3BookBorrowersInCountry(@Param("countryId") Long countryId, @Param("bookId") Long bookId, Pageable pageable);
 }

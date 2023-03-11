@@ -51,15 +51,9 @@ public class Top3BooksService {
             System.out.println(authorId);
 //            String authorName = authorRepository.findById(authorId).get().getName();
             String authorName = "Temp Name";
-            List<Long> topBorrowers = bookRentRepository.getTop3BookBorrowersInCountry(countryCode,bookId, page);
+            List<String> topBorrowers = bookRentRepository.getTop3BookBorrowersInCountry(countryCode,bookId, page);
 
-            top3Books.add(new TopReadBook(bookName, authorName, topBorrowers.stream()
-                    .map(Long::intValue)
-                    .map(personRepository::findById)
-                    .map(Optional::get)
-                    .map(Person::getName)
-                    .collect(Collectors.toList())
-            ));
+            top3Books.add(new TopReadBook(bookName, authorName, topBorrowers));
         }
         return top3Books;
     }
