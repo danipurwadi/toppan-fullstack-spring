@@ -1,7 +1,6 @@
 package com.dani.service;
 
 import com.dani.CountryCodeTranslator;
-import com.dani.exception.NoResultException;
 import com.dani.model.TopReadBook;
 import com.dani.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +56,7 @@ public class Top3BooksService {
         if (hasResult) {
             return top3Books;
         } else {
-            throw new NoResultException();
+            return List.of(); // return empty list and throw error at controller level
         }
     }
 }
