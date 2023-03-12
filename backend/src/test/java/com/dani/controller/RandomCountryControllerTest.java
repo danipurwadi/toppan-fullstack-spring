@@ -27,7 +27,7 @@ public class RandomCountryControllerTest {
     private MockMvc mvc;
 
     @Test
-    public void When_GetRandomCountry_Expect_ReturnJson() throws Exception {
+    public void GetRandomCountry_When_APICalled_Expect_ServiceCalled() throws Exception {
         Map<String, String> result = Map.ofEntries(
                 new AbstractMap.SimpleEntry<>("full_name", "Singapore"),
                 new AbstractMap.SimpleEntry<>("country_code", "702")
