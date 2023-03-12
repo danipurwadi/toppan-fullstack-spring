@@ -2,7 +2,7 @@ import React from 'react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import App from './App';
 
 
@@ -89,4 +89,41 @@ test('loads and display data correctly', async () => {
   expect(screen.getAllByTestId('customer')[1]).toHaveTextContent("Hobbit Smith");
   expect(screen.getAllByTestId('customer')[2]).toHaveTextContent("Hobbit Lee");
   expect(screen.queryAllByText('Lord Doe')).toHaveLength(0);
+});
+
+
+test('display no data found when server returns no results', async () => {
+  server.use(
+    rest.get('http://localhost:8080/getTop3ReadBooks', (req, res, ctx) => {
+      return res(ctx.json({
+        message: "no results"
+      }));
+    })
+  );
+
+  render(<App />);
+  expect(screen.getByTestId('action-btn')).toHaveTextContent("Get country:");
+  expect(screen.getByTestId('error-message')).toHaveTextContent("No data found");
+
+  fireEvent.click(screen.getByTestId('action-btn'));
+  await screen.findByTestId('error-message');
+  expect(screen.getByTestId('error-message')).toHaveTextContent("No data found");
+});
+
+test('display no data found when server returns invalid parameter', async () => {
+  server.use(
+    rest.get('http://localhost:8080/getTop3ReadBooks', (req, res, ctx) => {
+      return res(ctx.json({
+        message: "invalid paramter"
+      }));
+    })
+  );
+
+  render(<App />);
+  expect(screen.getByTestId('action-btn')).toHaveTextContent("Get country:");
+  expect(screen.getByTestId('error-message')).toHaveTextContent("No data found");
+
+  fireEvent.click(screen.getByTestId('action-btn'));
+  await screen.findByTestId('error-message');
+  expect(screen.getByTestId('error-message')).toHaveTextContent("No data found");
 });
