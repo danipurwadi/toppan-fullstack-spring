@@ -1,6 +1,5 @@
 package com.dani.service;
 
-import com.dani.CountryCodeTranslator;
 import com.dani.model.TopReadBook;
 import com.dani.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,17 +27,16 @@ public class Top3BooksService {
     @Autowired
     AuthorBookRepository authorBookRepository;
 
-    private final CountryCodeTranslator countryCodeTranslator;
-    private final Pageable page;
+    @Autowired
+    private CountryCodeTranslatorService countryCodeTranslatorService;
 
-    public Top3BooksService() {
-        this.countryCodeTranslator = new CountryCodeTranslator();
-        this.page = PageRequest.of(0, 3);
-    }
+    private static final Pageable page = PageRequest.of(0, 3);
+
+    public Top3BooksService() { }
 
     public List<TopReadBook> getTop3Books(String alphaCode) {
         List<TopReadBook> top3Books = new ArrayList<>();
-        long countryCode = countryCodeTranslator.getCountryCode(alphaCode);
+        long countryCode = countryCodeTranslatorService.getCountryCode(alphaCode);
         List<Long> topBooks = bookRentRepository.getTopBooksId(page);
         boolean hasResult = false;
         for (Long bookId : topBooks) {

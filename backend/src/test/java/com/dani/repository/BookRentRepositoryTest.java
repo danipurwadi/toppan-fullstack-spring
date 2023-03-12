@@ -1,7 +1,6 @@
-package com.dani.unittests;
+package com.dani.repository;
 
 import com.dani.model.*;
-import com.dani.repository.*;
 import com.dani.util.PostgresqlContainer;
 import org.junit.ClassRule;
 import org.junit.jupiter.api.Test;

@@ -1,11 +1,8 @@
-package com.dani.unittests;
+package com.dani.repository;
 
 import com.dani.model.Author;
 import com.dani.model.AuthorBook;
 import com.dani.model.Book;
-import com.dani.repository.AuthorBookRepository;
-import com.dani.repository.AuthorRepository;
-import com.dani.repository.BookRepository;
 import com.dani.util.PostgresqlContainer;
 import org.junit.ClassRule;
 import org.junit.jupiter.api.BeforeEach;

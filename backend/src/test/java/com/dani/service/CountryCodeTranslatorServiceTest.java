@@ -1,17 +1,22 @@
-package com.dani;
+package com.dani.service;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CountryCodeTranslatorUnitTest {
+@SpringBootTest
+class CountryCodeTranslatorServiceTest {
+
+    @Autowired
+    CountryCodeTranslatorService countryCodeTranslatorService;
 
     // Positive Tests
     @Test
     void When_getCountryCode_Expect_CorrectOutput() {
-        CountryCodeTranslator countryCodeTranslator = new CountryCodeTranslator();
         Map<String, Long> randomCountryCodes = Map.ofEntries(
                 new AbstractMap.SimpleEntry<>("AF", 4L),
                 new AbstractMap.SimpleEntry<>("SG", 702L),
@@ -21,17 +26,16 @@ class CountryCodeTranslatorUnitTest {
         );
 
         for (String alphaCode : randomCountryCodes.keySet()) {
-            assertEquals(randomCountryCodes.get(alphaCode), countryCodeTranslator.getCountryCode(alphaCode));
+            assertEquals(randomCountryCodes.get(alphaCode), countryCodeTranslatorService.getCountryCode(alphaCode));
         }
     }
 
     @Test
     void When_getRandomCountryCode_Expect_CorrectOutput() {
         ArrayList<String> randomCodes = new ArrayList<>();
-        CountryCodeTranslator countryCodeTranslator = new CountryCodeTranslator();
         for (int i = 0; i < 20; i++) {
-            String randomCountryCode = countryCodeTranslator.getRandomCountryCode().get("country_code");
-            assertNotNull(countryCodeTranslator.getCountryCode(randomCountryCode));
+            String randomCountryCode = countryCodeTranslatorService.getRandomCountryCode().get("country_code");
+            assertNotNull(countryCodeTranslatorService.getCountryCode(randomCountryCode));
             randomCodes.add(randomCountryCode);
         }
         assertEquals(randomCodes.size(), 20);
@@ -44,8 +48,7 @@ class CountryCodeTranslatorUnitTest {
     // Negative Tests
     @Test
     void When_GivenInvalidAlphaCode_Expect_ExceptionThrown() {
-        CountryCodeTranslator countryCodeTranslator = new CountryCodeTranslator();
         String invalidCode = "XYZ";
-        assertThrows(NullPointerException.class, () -> countryCodeTranslator.getCountryCode(invalidCode));
+        assertThrows(NullPointerException.class, () -> countryCodeTranslatorService.getCountryCode(invalidCode));
     }
 }

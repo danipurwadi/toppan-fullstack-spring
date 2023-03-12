@@ -1,8 +1,5 @@
-package com.dani.unittests;
+package com.dani.model;
 
-import com.dani.model.Book;
-import com.dani.model.BookRent;
-import com.dani.model.Person;
 import com.dani.util.PostgresqlContainer;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;

@@ -1,19 +1,25 @@
-package com.dani;
+package com.dani.service;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
 import java.io.FileReader;
 import java.util.*;
 
-public class CountryCodeTranslator {
+@Service
+public class CountryCodeTranslatorService {
+    @Autowired
+    CountryCode countryCode;
+
     private HashMap<String, CountryCode> countryCodes;
     private static final String FILE_NAME = "ISOCountries.csv";
 
-    public CountryCodeTranslator() {
-        this.countryCodes = readCSV();
+    public CountryCodeTranslatorService() {
+        countryCodes = readCSV();
     }
     private HashMap<String, CountryCode> readCSV() {
         HashMap<String, CountryCode> result = new HashMap<>();
@@ -29,7 +35,11 @@ public class CountryCodeTranslator {
 
             // print Data
             for (String[] row : allData) {
-                result.put(row[1], new CountryCode(row[0], row[1], row[2]));
+                CountryCode countryCode = new CountryCode();
+                countryCode.setFullName(row[0]);
+                countryCode.setAlphaCode(row[1]);
+                countryCode.setCountryCode(Long.parseLong(row[2]));
+                result.put(row[1], countryCode);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -50,37 +60,5 @@ public class CountryCodeTranslator {
                 new AbstractMap.SimpleEntry<>("country_code", randomCountry.getAlphaCode())
         );
     }
-}
 
-class CountryCode {
-    private String fullName;
-    private String alphaCode;
-    private Long countryCode;
-
-    public CountryCode(String fullName, String alphaCode, String countryCode) {
-        this.fullName = fullName;
-        this.alphaCode = alphaCode;
-        this.countryCode = Long.parseLong(countryCode);
-    }
-
-    public String getAlphaCode() {
-        return alphaCode;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public Long getCountryCode() {
-        return countryCode;
-    }
-
-    @Override
-    public String toString() {
-        return "CountryCode{" +
-                "alphaCode='" + alphaCode + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", countryCode='" + countryCode + '\'' +
-                '}';
-    }
 }

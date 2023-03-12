@@ -1,6 +1,5 @@
-package com.dani.unittests;
+package com.dani.model;
 
-import com.dani.model.Book;
 import com.dani.util.PostgresqlContainer;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
@@ -21,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class BookUnitTest {
+class AuthorUnitTest {
 
     @ClassRule
     public static PostgreSQLContainer<PostgresqlContainer> postgreSQLContainer = PostgresqlContainer.getInstance();
@@ -32,63 +31,62 @@ class BookUnitTest {
     // Positive Tests
     @Test
     @Transactional
-    public void When_FieldsAreProper_Expect_BookConstructed() {
-        Book book = new Book();
-        book.setName("Harry Potter");
-        book.setUpdatedAt(new Date());
-        book.setCreatedAt(new Date());
+    public void When_FieldsAreProper_Expect_AuthorConstructed() {
+        Author author = new Author();
+        author.setName("JK Rowling");
+        author.setUpdatedAt(new Date());
+        author.setCreatedAt(new Date());
 
-        entityManager.persist(book);
+        entityManager.persist(author);
         entityManager.flush();
 
-        assertNotNull(book.getId());
+        assertNotNull(author.getId());
     }
 
     @Test
     @Transactional
-    public void When_BooksAreCreated_Expect_IdsToBeSequential() {
-        Book book = new Book();
-        book.setName("Harry Potter");
-        book.setUpdatedAt(new Date());
-        book.setCreatedAt(new Date());
+    public void When_AuthorsAreCreated_Expect_IdsToBeSequential() {
+        Author author = new Author();
+        author.setName("JK Rowling");
+        author.setUpdatedAt(new Date());
+        author.setCreatedAt(new Date());
 
-        Book book2 = new Book();
-        book2.setName("Lord of the Rings");
+        Author book2 = new Author();
+        book2.setName("JRR Tolkein");
         book2.setUpdatedAt(new Date());
         book2.setCreatedAt(new Date());
 
-        entityManager.persist(book);
+        entityManager.persist(author);
         entityManager.persist(book2);
 
-        assertEquals(1, book2.getId() - book.getId());
+        assertEquals(1, book2.getId() - author.getId());
     }
 
     // Negative Tests
     @Test
     @Transactional
     public void When_FieldsAreNull_Expect_ConstraintError() {
-        Book book = new Book();
+        Author author = new Author();
 
         ConstraintViolationException exception = assertThrows(ConstraintViolationException.class, () -> {
-            entityManager.persist(book);
+            entityManager.persist(author);
             entityManager.flush();
         });
         assertTrue(exception.getMessage().contains("interpolatedMessage='must not be null', propertyPath=createdAt"));
         assertTrue(exception.getMessage().contains("interpolatedMessage='must not be null', propertyPath=updatedAt"));
         assertTrue(exception.getMessage().contains("interpolatedMessage='must not be null', propertyPath=name"));
-
     }
 
     @Test
     @Transactional
     public void When_NameExceedLimit_Expect_Error() {
-        Book book = new Book();
-        book.setName("VERY_LONG_TITLE".repeat(20));
-        book.setUpdatedAt(new Date());
-        book.setCreatedAt(new Date());
+        Author author = new Author();
+        author.setName("VERY_LONG_TITLE".repeat(20));
+        author.setUpdatedAt(new Date());
+        author.setCreatedAt(new Date());
 
         PersistenceException exception = assertThrows(PersistenceException.class, () -> {
-            entityManager.persist(book);
+            entityManager.persist(author);
             entityManager.flush();
         });
 

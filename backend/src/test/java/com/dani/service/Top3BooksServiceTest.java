@@ -1,8 +1,7 @@
-package com.dani;
+package com.dani.service;
 
 import com.dani.model.*;
 import com.dani.repository.*;
-import com.dani.service.Top3BooksService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -104,7 +103,6 @@ public class Top3BooksServiceTest {
 
 
         List<TopReadBook> topBooks = top3BooksService.getTop3Books("SG");
-        System.out.println(topBooks);
 
         TopReadBook rank1 = new TopReadBook(book1.getName(), author1.getName(), List.of(person2.getName(), person1.getName()));
         TopReadBook rank2 = new TopReadBook(book3.getName(), author2.getName(), List.of(person2.getName()));
@@ -115,8 +113,8 @@ public class Top3BooksServiceTest {
 
     @Test
     public void getTop3Books_When_NoBorrowersPresent_Expect_EmptyList() {
-        List<TopReadBook> result = top3BooksService.getTop3Books("SG");
-        assertEquals(result.size(), 0);
+        List<TopReadBook> result = top3BooksService.getTop3Books("ID");
+        assertEquals(0, result.size());
     }
 
     @Test
