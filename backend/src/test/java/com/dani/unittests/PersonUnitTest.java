@@ -37,6 +37,7 @@ class PersonUnitTest {
         person.setName("John Loke");
         person.setUpdatedAt(new Date());
         person.setCreatedAt(new Date());
+        person.setCountryId(123L);
 
         entityManager.persist(person);
         entityManager.flush();
@@ -46,14 +47,29 @@ class PersonUnitTest {
 
     @Test
     @Transactional
+    public void When_CountryIdNull_Expect_PersonConstructed() {
+        Person person = new Person();
+        person.setName("John Loke");
+        person.setUpdatedAt(new Date());
+        person.setCreatedAt(new Date());
+
+        entityManager.persist(person);
+        entityManager.flush();
+
+        assertNotNull(person.getId());
+    }
+
+
+    @Test
+    @Transactional
     public void When_PersonsAreCreated_Expect_IdsToBeSequential() {
         Person person = new Person();
-        person.setName("Harry Potter");
+        person.setName("John Doe");
         person.setUpdatedAt(new Date());
         person.setCreatedAt(new Date());
 
         Person book2 = new Person();
-        book2.setName("Lord of the Rings");
+        book2.setName("Luke Doe");
         book2.setUpdatedAt(new Date());
         book2.setCreatedAt(new Date());
 
