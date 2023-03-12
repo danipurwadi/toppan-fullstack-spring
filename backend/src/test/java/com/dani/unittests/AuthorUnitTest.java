@@ -76,7 +76,6 @@ class AuthorUnitTest {
         assertTrue(exception.getMessage().contains("interpolatedMessage='must not be null', propertyPath=createdAt"));
         assertTrue(exception.getMessage().contains("interpolatedMessage='must not be null', propertyPath=updatedAt"));
         assertTrue(exception.getMessage().contains("interpolatedMessage='must not be null', propertyPath=name"));
-
     }
 
     @Test

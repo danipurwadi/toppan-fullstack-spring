@@ -2,6 +2,8 @@ package com.dani.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 import java.util.Objects;
@@ -12,12 +14,14 @@ import java.util.Objects;
 public class AuthorBook {
     @Id
     @NotNull
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
     @JoinColumn(name="author_id")
     private Author author;
 
     @Id
     @NotNull
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
