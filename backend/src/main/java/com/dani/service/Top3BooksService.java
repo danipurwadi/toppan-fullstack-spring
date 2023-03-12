@@ -2,7 +2,6 @@ package com.dani.service;
 
 import com.dani.CountryCodeTranslator;
 import com.dani.exception.NoResultException;
-import com.dani.model.Person;
 import com.dani.model.TopReadBook;
 import com.dani.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class Top3BooksService {
@@ -32,8 +29,8 @@ public class Top3BooksService {
     @Autowired
     AuthorBookRepository authorBookRepository;
 
-    private CountryCodeTranslator countryCodeTranslator;
-    private Pageable page;
+    private final CountryCodeTranslator countryCodeTranslator;
+    private final Pageable page;
 
     public Top3BooksService() {
         this.countryCodeTranslator = new CountryCodeTranslator();
@@ -43,14 +40,14 @@ public class Top3BooksService {
     public List<TopReadBook> getTop3Books(String alphaCode) {
         List<TopReadBook> top3Books = new ArrayList<>();
         long countryCode = countryCodeTranslator.getCountryCode(alphaCode);
-        List<Long> topBooks = bookRentRepository.getTop3BooksId(page);
+        List<Long> topBooks = bookRentRepository.getTopBooksId(page);
         boolean hasResult = false;
         for (Long bookId : topBooks) {
             Integer bookIdInt = bookId.intValue();
             String bookName = bookRepository.findById(bookIdInt).get().getName();
-            Integer authorId = authorBookRepository.getAuthorFromBookId(bookIdInt);
+            Integer authorId = authorBookRepository.getAuthorIdFromBookId(bookIdInt);
             String authorName = authorRepository.findById(authorId).get().getName();
-            List<String> topBorrowers = bookRentRepository.getTop3BookBorrowersInCountry(countryCode,bookId, page);
+            List<String> topBorrowers = bookRentRepository.getTopBookBorrowerNamesInCountry(countryCode,bookId, page);
             if (topBorrowers.size() > 0) {
                 hasResult = true;
             }
