@@ -2,6 +2,7 @@ package com.dani.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class TopReadBook {
     private String name;
@@ -53,10 +54,19 @@ public class TopReadBook {
 
     @Override
     public String toString() {
-        return "Top3Books{" +
-                "name='" + name + '\'' +
-                ", author='" + author + '\'' +
-                ", borrower=" + borrower +
+        return "{" +
+                "\"name\"=\"" + name + '\"' +
+                ",\"author\"=\"" + author + '\"' +
+                ",\"borrower\"=\"" + borrower +
+                '}';
+    }
+
+    public String convertToJsonStringFormat() {
+        String borrowerJsonString = "[" + borrower.stream().map(s -> "\"" + s + "\"").map(Object::toString).collect(Collectors.joining(","))+ "]";
+        return "{" +
+                "\"name\":\"" + name + '\"' +
+                ",\"author\":\"" + author + '\"' +
+                ",\"borrower\":" + borrowerJsonString +
                 '}';
     }
 }
