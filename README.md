@@ -88,6 +88,8 @@ Run `npm start` in the terminal and it should automatically open up your browser
 
 It should boot up a page and you're done!
 
+![image](https://user-images.githubusercontent.com/60135314/224647865-6452ccf1-29e6-46f6-8e32-7bfe4ef77751.png)
+
 # Last Note
 
 If you encounter any difficulty in setting up, feel free to contact me using my email/phone number in the resume. Thank you!
