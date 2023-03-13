@@ -86,7 +86,10 @@ Step 2. Run the application
 
 Run `npm start` in the terminal and it should automatically open up your browser and load the page `http://localhost:3000/`
 
-It should boot up a page and you're done!
+It should boot up the page like below and you're done!
+
+![image](https://user-images.githubusercontent.com/60135314/224648405-1c744e0a-bd65-46a9-8d06-1547c4f8efee.png)
+
 
 # Last Note
 
